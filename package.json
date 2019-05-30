@@ -1,0 +1,13 @@
+{
+  "name": "Cheil_api",
+  "version": "0.0.0",
+  "description": "Test_API_CHEIL",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "HERMESMATEUS",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
