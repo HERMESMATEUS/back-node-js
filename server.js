@@ -1,33 +1,52 @@
 var express = require("express");
-
+var Json = require("./JSONbasedata.json");
+var cors = require('cors')
 var app = new express();
 
-app.get("/hotels", (req, res) => {
+//******************* */
+
+app.use(cors())
+
+app.get('/hotels', (req, res) => {
   console.log("/getToken");
-  res.send("All hotels !");
+  res.status(200).send(Json)
 });
 
+
+//******************* */
 /* 
     Params of search
-    higher_price
-    lower_price
-    recent
-    old
-
+    stars
+    name
 */
-
 app.get("/filter_hotels", (req, res) => {
-  var higher_price = req.query && req.query.higher_price;
-  var lower_price = req.query && req.query.lower_price;
-  var recent = req.query && req.query.recent;
-  var old = req.query && req.query.old;
+  console.log("/filter_hotels");
 
-  console.log("higher_price:", higher_price);
-  console.log("lower_price: ", lower_price);
-  console.log("recent: ", recent);
-  console.log("old: ", old);
+  var stars = req.query && req.query.stars;
+  var name = req.query && req.query.name;
 
-  res.send("hotels filtered");
+  let filterStars = Json;
+
+  if (stars) {
+    filterStars = Json.filter(hotel => hotel.stars == stars);
+  }
+  if (name) {
+    filterStars = filterStars.filter(hotel => hotel.name == name);
+  }
+
+  console.log('filterStars: ', filterStars);
+
+  res.status(200).send(filterStars)
 });
 
+
+//******************* */
+
+app.get('/', function (req, res) {
+  res.send();
+});
+
+//******************* */
+
+app.use(express.static(__dirname + '/public'));
 app.listen(8080);
